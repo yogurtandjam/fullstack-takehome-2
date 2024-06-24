@@ -1,6 +1,6 @@
-# Backend for Vest Frontend Takehome
+# Backend for Vest Frontend Take Home
 
-This is the mock backend server for Vest's Frontend Takehome. The backend is built using Node.js and Express and provides API endpoints to store and retrieve emoji reactions on a TradingView chart.
+This is the mock backend server for Vest's Frontend Take Home. The backend is built using Node.js and Express and provides API endpoints to store and retrieve emoji reactions on a TradingView chart.
 
 ## Setup Instructions
 
@@ -38,7 +38,7 @@ The sample backend server exposes the following API endpoints:
 ```yaml
 {
   "2024-06-24T00:00:00Z": [
-    { "userId": "user1", "emoji": "👍" },
+    { "userId": "user1", "emoji": "🚀" },
     { "userId": "user2", "emoji": "😍" }
   ],
   "2024-06-24T01:00:00Z": [
