@@ -9,7 +9,7 @@ In this takehome assignment, you will be tasked with creating a frontend applica
 
 ### Objective
 
-1. Recreate the following [Figma design.](https://www.figma.com/design/Y0xGAiudDKFthVWTLnyWCT/Frontend-Takehome-Assignment?node-id=0-1&t=hmfOm6qYW2aRQwdN-1)
+1. Recreate the following [Figma design](https://www.figma.com/design/Y0xGAiudDKFthVWTLnyWCT/Frontend-Takehome-Assignment?node-id=0-1&t=hmfOm6qYW2aRQwdN-1). Don't woryy about the functionality of the components; we are mostly looking at the UI!
 
 2. Enable users to add their live reactions to the candlestick chart. The user should be able to add emoji reactions by dragging and dropping emojis from a sidebar onto the chart. 
 
@@ -20,7 +20,7 @@ In this takehome assignment, you will be tasked with creating a frontend applica
 ### Technical Specifications
 - Use React for recreating the design.
 - Use the mock Node.Js / Express backend server to retrieve / add emojis.
-- Use TradingView's [`lightweight-charts` library](https://github.com/tradingview/lightweight-charts) for the candlestick chart (already included in `package.json`).
+- Use TradingView's [`lightweight-charts`](https://github.com/tradingview/lightweight-charts) library for the candlestick chart (already included in `package.json`). Don't worry about matching the exact Figma design for the chart component since this library is a reduced version of what we use in production!
 
 ### Deliverables
 - A zip file or a link to a Git repository containing:
