@@ -18,8 +18,9 @@ In this takehome assignment, you will be tasked with creating a frontend applica
     - [Sound File](https://drive.google.com/file/d/1N6gz4R2qZHrGnOzu49QUP95oQokKw6ID/view?usp=sharing)
 
 ### Technical Specifications
-- You are to use React for recreating the design.
-- You are to use the mock Node.Js / Express backend server to retrieve / add emojis.
+- Use React for recreating the design.
+- Use the mock Node.Js / Express backend server to retrieve / add emojis.
+- Use TradingView's [`lightweight-charts` library](https://github.com/tradingview/lightweight-charts) for the candlestick chart (already included in `package.json`).
 
 ### Deliverables
 - A zip file or a link to a Git repository containing:
