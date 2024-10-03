@@ -1,4 +1,4 @@
-# Vest Frontend Take Home Assignment - Social Trading
+# Vest Fullstack Take Home Assignment - Social Trading
 
 Vest Labs is a quantitative crypto research firm building a Vest Exchange - a highly capital efficient perpetual futures exchange that uses zero-knowledge proofs to ensure the fairest pricing for traders and liquidity providers.
 
