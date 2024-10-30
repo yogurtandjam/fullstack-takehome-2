@@ -13,12 +13,14 @@ As part of our team, you will be at the forefront of innovation, developing and 
 4.  **Bonus Points:**
   
     a. Enable users to add their live reactions to the candlestick chart. The user should be able to add emoji reactions by dragging and dropping emojis from a sidebar onto the chart. You can use the mock Node.JS / Express backend server to retrieve / add emojis.
+
     b. Animate successful trading when clicking “Buy” to include confetti and sound. [See example](https://drive.google.com/file/d/1BFJUZw83shYzdXBv9I1maoCMkaPRmkxW/view?usp=sharing)
 
         - [Sound File](https://drive.google.com/file/d/1N6gz4R2qZHrGnOzu49QUP95oQokKw6ID/view?usp=sharing)
 
-    b. Include a dropdown to select for different markets
-    c. Handle switching of time intervals
+    c. Include a dropdown to select for different markets
+    
+    d. Handle switching of time intervals
 
 ### Technical Specifications
 - Use React and Typescript
