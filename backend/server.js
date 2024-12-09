@@ -30,6 +30,22 @@ app.get('/getReactions', (req, res) => {
     res.json(emojiReactions);
 });
 
+// TODO: add request params
+app.get('/lines', (req, res) => {
+    console.log('lines')
+    const now = Date.now()
+    const oneHourAgo = now - (60 * 30 * 1000)
+    fetch(`https://serverprod.vest.exchange/v2/klines?symbol=ETH-PERP&interval=1m&startTime=${oneHourAgo}&endTime=${now}&limit=60`, {
+        "headers": {
+          "xrestservermm": "restserver0",
+        },
+      }).then(r => r.json()).then(r => {
+        console.log('r', r)
+        res.status(200).json(r)
+});
+})
+
 app.listen(3001, () => {
     console.log('Server is running on port 3001');
+    console.log('changed')
 });
