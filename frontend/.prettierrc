@@ -1,0 +1,23 @@
+{
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "jsxBracketSameLine": false,
+    "plugins": ["@trivago/prettier-plugin-sort-imports"],
+    "tailwindAttributes": ["tw"],
+    "tailwindFunctions": ["tw"],
+    "importOrder": [
+      "^./polyfills$",
+      "^react$",
+      "<THIRD_PARTY_MODULES>",
+      "^@/(constants|abi|types)(.*)$",
+      "^@/(hooks|contexts|providers)(.*)$",
+      "^@/(styles|assets)(.*)$",
+      "^@/(components|pages)(.*)$",
+      "^@/state(.*)$",
+      "^@/lib(.*)$",
+      "^@/utils(.*)$",
+      "^[./]"
+    ],
+    "importOrderSeparation": true
+  }
