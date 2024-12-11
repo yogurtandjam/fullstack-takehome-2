@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -8,9 +8,14 @@ export default defineConfig({
     port: 3000,
   },
   optimizeDeps: {
-    exclude: ['brotli-wasm']
+    exclude: ['brotli-wasm'],
   },
   build: {
     target: 'es2022',
-  }
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
 });
