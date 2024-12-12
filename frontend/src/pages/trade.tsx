@@ -1,3 +1,5 @@
+import { Interval } from '@/types';
+
 import { Chart } from '@/components/chart/chart';
 import { Header } from '@/components/header/header';
 import { TradeForm } from '@/components/trade-form/trade-form';
@@ -5,8 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type TradePageProps = {
   symbol: string;
+  setInterval: (interval: Interval) => void;
 };
-export const TradePage = ({ symbol }: TradePageProps) => {
+export const TradePage = ({ symbol, setInterval }: TradePageProps) => {
   return (
     <div className="h-full w-full bg-black pt-5 pl-12 pr-12">
       <Header symbol={symbol} />
@@ -17,7 +20,7 @@ export const TradePage = ({ symbol }: TradePageProps) => {
         </TabsList>
         <TabsContent value="price">
           <div className="flex flex-row">
-            <Chart />
+            <Chart setInterval={setInterval} />
             <TradeForm />
           </div>
         </TabsContent>

@@ -7,11 +7,11 @@ app.use(express.json());
 
 // Sample data
 let emojiReactions = {
-  "2024-06-24T00:00:00Z": [
+  "2024-12-12T00:00:00Z": [
     { userId: "user1", emoji: "🚀" },
     { userId: "user2", emoji: "😎" },
   ],
-  "2024-06-24T01:00:00Z": [
+  "2024-12-12T01:00:00Z": [
     { userId: "user3", emoji: "😡" },
     { userId: "user4", emoji: "😭" },
   ],

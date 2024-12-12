@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { getLines } from '@/services/api';
+import { getLines, getReactions } from '@/services/api';
 import {
   BrushIcon,
   CameraIcon,
@@ -28,7 +28,10 @@ import { FibretIcon } from '../../assets/fibret';
 import { useWebSocket } from '../../hooks/useSocketCtx';
 import { createCandlestickData } from '../../utils';
 
-export const Chart = () => {
+type ChartProps = {
+  setInterval: (interval: Interval) => void;
+};
+export const Chart = ({ setInterval }: ChartProps) => {
   const { streamingCandlestick } = useWebSocket();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const { chart, series } = useChart({ chartContainerRef });
@@ -40,12 +43,20 @@ export const Chart = () => {
   }, [streamingCandlestick, series]);
 
   useEffect(() => {
-    getLines().then((d) => {
+    getLines().then((lines) => {
       if (!chart || !series) return;
       chart.timeScale().fitContent();
-      series.setData(createCandlestickData(d));
+      series.setData(createCandlestickData(lines));
     });
   }, [chart, series]);
+
+  useEffect(() => {
+    getReactions().then((reactions) => {
+      if (!series) return;
+      console.log('reactions', reactions);
+      series.setMarkers(reactions);
+    });
+  }, [series]);
 
   return (
     <div className="pl-5 pr-5 pb-5 pt-1 flex-1 bg-zinc-900 mr-5">

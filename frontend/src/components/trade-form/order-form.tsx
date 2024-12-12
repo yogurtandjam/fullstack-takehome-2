@@ -19,7 +19,6 @@ export const OrderForm = ({ position }: OrderFormProps) => {
   const { ticker } = useWebSocket();
   const [, setOrderType] = useState<string | undefined>();
   const [leverage, setLeverage] = useState<number>(1);
-  console.log(leverage);
   return (
     <Card>
       <div className="flex flex-row">
