@@ -1,27 +1,29 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+svg {
+  stroke-width: 1;
+}
 
 body {
   height: 100%;
-  width: 100%; 
+  width: 100%;
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 100;
+  font-size: small;
 }
 :root {
   height: 100%;
-  width: 100%
+  width: 100%;
+  color: white;
 }
-#root { 
+#root {
   height: 100%;
   width: 100%;
 }
 
-
-
-
 /* VITE DEFAULTS. NOT USING THESE */
-
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -94,7 +96,6 @@ button:focus-visible {
 
 @layer base {
   :root {
-
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
 }

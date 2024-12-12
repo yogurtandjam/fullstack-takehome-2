@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
 
 import { CandlestickData, Time } from 'lightweight-charts';
 
@@ -6,14 +6,32 @@ import { DEFAULT_WS_URL, DEFAULT_INTERVAL } from '../consts';
 import { TTicker, TWsChannelMessage, TWsSubscribedMessage } from '../types';
 import { lineToCandlestick } from '../utils';
 
-export const useWebSocket = (symbol: string) => {
-  const socket = useMemo(() => {
-    return new WebSocket(DEFAULT_WS_URL);
-  }, []);
+interface WebSocketContextType {
+  socket: WebSocket | null;
+  streamingCandlestick: CandlestickData<Time> | undefined;
+  tickers: TTicker[] | undefined;
+  ticker: TTicker | undefined;
+}
+
+const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
+
+interface WebSocketProviderProps {
+  symbol: string;
+  children: ReactNode; // Children prop to wrap around your components
+}
+
+export const WebSocketProvider = ({ symbol, children }: WebSocketProviderProps) => {
+  const socket = useMemo(() => new WebSocket(DEFAULT_WS_URL), []);
   const [streamingCandlestick, setStreamingCandlestick] = useState<CandlestickData<Time>>();
   const [tickers, setTickers] = useState<TTicker[]>();
+
   const linesChannelName: `${string}@kline_${string}` = `${symbol}@kline_${DEFAULT_INTERVAL}`;
   const tickersChannelName = 'tickers';
+
+  const ticker = useMemo(() => {
+    return tickers?.find((t) => t.symbol === symbol);
+  }, [symbol, tickers]);
+
   useEffect(() => {
     const handleOpen = () => {
       console.log('WebSocket connection established.');
@@ -24,7 +42,6 @@ export const useWebSocket = (symbol: string) => {
         id: subscriptionId,
       };
       socket.send(JSON.stringify(linesSubscriptionMessage));
-      console.log('Sent subscription message:', linesSubscriptionMessage);
 
       const tickerSubscriptionMessage = {
         method: 'SUBSCRIBE',
@@ -32,7 +49,6 @@ export const useWebSocket = (symbol: string) => {
         id: subscriptionId,
       };
       socket.send(JSON.stringify(tickerSubscriptionMessage));
-      console.log('Sent subscription message:', tickerSubscriptionMessage);
     };
 
     const handleError = (error: Event) => {
@@ -50,10 +66,8 @@ export const useWebSocket = (symbol: string) => {
         const text = new TextDecoder().decode(uint8Array);
         const parsedData: TWsSubscribedMessage | TWsChannelMessage = JSON.parse(text);
 
-        if (!('channel' in parsedData)) {
-          console.log('inital response, figure this out later');
-          return;
-        }
+        if (!('channel' in parsedData)) return;
+
         if (parsedData.channel === linesChannelName) {
           const newestCandlestick = lineToCandlestick(parsedData.data);
           setStreamingCandlestick(newestCandlestick);
@@ -71,7 +85,7 @@ export const useWebSocket = (symbol: string) => {
     socket.addEventListener('error', handleError);
     socket.addEventListener('close', handleClose);
     socket.addEventListener('message', handleMessage);
-    // Cleanup on unmount
+
     return () => {
       socket.removeEventListener('open', handleOpen);
       socket.removeEventListener('error', handleError);
@@ -79,7 +93,18 @@ export const useWebSocket = (symbol: string) => {
       socket.removeEventListener('message', handleMessage);
     };
   }, [linesChannelName, socket, symbol]);
-  return { socket, streamingCandlestick, tickers };
+
+  return (
+    <WebSocketContext.Provider value={{ socket, streamingCandlestick, tickers, ticker }}>
+      {children}
+    </WebSocketContext.Provider>
+  );
 };
 
-export default useWebSocket;
+export const useWebSocket = () => {
+  const context = useContext(WebSocketContext);
+  if (!context) {
+    throw new Error('useWebSocket must be used within a WebSocketProvider');
+  }
+  return context;
+};

@@ -35,3 +35,7 @@ export const lineToCandlestick = (line: TLine) => {
 export const createCandlestickData = (lines: TLine[]): CandlestickData<Time>[] => {
   return lines.map(lineToCandlestick);
 };
+
+export const capitalize = (s: string) => {
+  return s.substring(0, 1).toLocaleUpperCase() + s.substring(1);
+};

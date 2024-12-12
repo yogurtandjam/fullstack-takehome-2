@@ -1,17 +1,22 @@
+import { useState } from 'react';
+
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import './App.css';
-import { Chart } from './components/chart/chart';
-import { Header } from './components/header';
-import { TradeForm } from './components/trade-form/trade-form';
+import { DEFAULT_SYMBOL } from './consts';
+import { WebSocketProvider } from './hooks/useSocketCtx';
+import { TradePage } from './pages/trade';
+
+const queryClient = new QueryClient();
 
 function App() {
+  const [symbol] = useState(DEFAULT_SYMBOL);
   return (
-    <div className="h-full w-full bg-black">
-      <Header />
-      <div className="flex flex-row">
-        <Chart />
-        <TradeForm />
-      </div>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <WebSocketProvider symbol={symbol}>
+        <TradePage symbol={symbol} />
+      </WebSocketProvider>
+    </QueryClientProvider>
   );
 }
 

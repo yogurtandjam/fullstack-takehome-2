@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-import { THEME_NEGATIVE, THEME_POSITIVE } from '@/consts';
+import { CHART_BG_COLOR, THEME_NEGATIVE, THEME_POSITIVE } from '@/consts';
 import {
   CandlestickData,
   ColorType,
@@ -10,9 +10,6 @@ import {
   Time,
   WhitespaceData,
 } from 'lightweight-charts';
-
-const backgroundColor = '#161514';
-const textColor = 'white';
 
 type UseChartProps = {
   chartContainerRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -31,14 +28,27 @@ export const useChart = (props: UseChartProps) => {
 
     const chart = createChart(refCurrent, {
       layout: {
-        background: { type: ColorType.Solid, color: '#161514' },
-        textColor,
+        background: { type: ColorType.Solid, color: CHART_BG_COLOR },
+        // TODO: use a real theme color
+        textColor: '#FFFEFE',
+      },
+      grid: {
+        vertLines: {
+          color: '#404040',
+          style: 0,
+          visible: true,
+        },
+        horzLines: {
+          color: '#404040',
+          style: 0,
+          visible: true,
+        },
       },
       timeScale: {
         timeVisible: true,
       },
       width: chartContainerRef?.current?.clientWidth,
-      height: 300,
+      height: chartContainerRef?.current?.clientHeight,
     });
     chart.timeScale().fitContent();
 
