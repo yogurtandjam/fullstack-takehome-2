@@ -60,4 +60,10 @@ Some things I didn't get to that I would like to:
 
 1. Emoji drag and drop. Implementing the drag and drop felt like it would take an inordinate amount of time given the time constraints so I opted not to do it. The biggest challenge here seems to be calculating the timestamp relative to position on the chart.
 
-2. General code cleanup.
+2. General code cleanup. When we move fast, we don't always spend a ton of time thinking out every possible case for code extensibility and composability, but it's always something we make time for after deadlines to keep code tidy.
+
+3. Loading state for the chart.
+
+4. Render optimizations. We can use redux to reduce the # of renders that the full application needs to go through.
+
+5. Much much more! Too many to count (including the other bonus point of the buy celebration)...
