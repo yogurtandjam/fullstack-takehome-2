@@ -30,5 +30,5 @@ export type TReaction = { userId: string; emoji: string; timestamp: string };
 export enum Interval {
   OneMinute = '1m',
   OneHour = '1h',
-  OneDay = '24h',
+  OneDay = '1d',
 }

@@ -1,14 +1,17 @@
-import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 
 import { CandlestickData, Time } from 'lightweight-charts';
 
-import { DEFAULT_WS_URL, DEFAULT_INTERVAL } from '../consts';
-import { TTicker, TWsChannelMessage, TWsSubscribedMessage } from '../types';
+import { DEFAULT_INTERVAL, DEFAULT_SYMBOL, DEFAULT_WS_URL } from '../consts';
+import { Interval, TTicker, TWsChannelMessage, TWsSubscribedMessage } from '../types';
 import { lineToCandlestick } from '../utils';
 
 interface WebSocketContextType {
+  interval: Interval | undefined;
+  setInterval: (interval: Interval) => void;
   socket: WebSocket | null;
   streamingCandlestick: CandlestickData<Time> | undefined;
+  symbol: string;
   tickers: TTicker[] | undefined;
   ticker: TTicker | undefined;
 }
@@ -16,16 +19,17 @@ interface WebSocketContextType {
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
 
 interface WebSocketProviderProps {
-  symbol: string;
   children: ReactNode; // Children prop to wrap around your components
 }
 
-export const WebSocketProvider = ({ symbol, children }: WebSocketProviderProps) => {
+export const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
+  const [symbol] = useState(DEFAULT_SYMBOL);
+  const [interval, setInterval] = useState<Interval>(DEFAULT_INTERVAL);
   const socket = useMemo(() => new WebSocket(DEFAULT_WS_URL), []);
   const [streamingCandlestick, setStreamingCandlestick] = useState<CandlestickData<Time>>();
   const [tickers, setTickers] = useState<TTicker[]>();
 
-  const linesChannelName: `${string}@kline_${string}` = `${symbol}@kline_${DEFAULT_INTERVAL}`;
+  const linesChannelName: `${string}@kline_${string}` = `${symbol}@kline_${interval}`;
   const tickersChannelName = 'tickers';
 
   const ticker = useMemo(() => {
@@ -95,7 +99,9 @@ export const WebSocketProvider = ({ symbol, children }: WebSocketProviderProps) 
   }, [linesChannelName, socket, symbol]);
 
   return (
-    <WebSocketContext.Provider value={{ socket, streamingCandlestick, tickers, ticker }}>
+    <WebSocketContext.Provider
+      value={{ socket, streamingCandlestick, tickers, ticker, symbol, interval, setInterval }}
+    >
       {children}
     </WebSocketContext.Provider>
   );

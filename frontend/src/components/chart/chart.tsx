@@ -19,6 +19,8 @@ import {
   TypeIcon,
 } from 'lucide-react';
 
+import { Interval } from '@/types';
+
 import { useChart } from '@/hooks/useChart';
 
 import { LongPositionIcon } from '@/assets/long-position';
@@ -27,12 +29,14 @@ import { XABCDPatternIcon } from '@/assets/xabcd-pattern';
 import { FibretIcon } from '../../assets/fibret';
 import { useWebSocket } from '../../hooks/useSocketCtx';
 import { createCandlestickData } from '../../utils';
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../ui/select';
 
-type ChartProps = {
+type ToolbarProps = {
+  interval: Interval;
   setInterval: (interval: Interval) => void;
 };
-export const Chart = ({ setInterval }: ChartProps) => {
-  const { streamingCandlestick } = useWebSocket();
+export const Chart = () => {
+  const { streamingCandlestick, symbol, interval, setInterval } = useWebSocket();
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const { chart, series } = useChart({ chartContainerRef });
 
@@ -43,12 +47,13 @@ export const Chart = ({ setInterval }: ChartProps) => {
   }, [streamingCandlestick, series]);
 
   useEffect(() => {
-    getLines().then((lines) => {
+    if (!symbol || !interval) return;
+    getLines(symbol, interval).then((lines) => {
       if (!chart || !series) return;
       chart.timeScale().fitContent();
       series.setData(createCandlestickData(lines));
     });
-  }, [chart, series]);
+  }, [chart, series, interval, symbol]);
 
   useEffect(() => {
     getReactions().then((reactions) => {
@@ -60,7 +65,7 @@ export const Chart = ({ setInterval }: ChartProps) => {
 
   return (
     <div className="pl-5 pr-5 pb-5 pt-1 flex-1 bg-zinc-900 mr-5">
-      <Toolbar />
+      <Toolbar interval={interval} setInterval={setInterval} />
       <div className="flex flex-row">
         <VerticalToolbar />
         <div className="flex-1" ref={chartContainerRef} />
@@ -70,14 +75,29 @@ export const Chart = ({ setInterval }: ChartProps) => {
 };
 
 const toolbarIconStyle = 'flex justify-start pr-2 border-r border-zinc-100 ';
-const Toolbar = () => {
+const Toolbar = ({ interval, setInterval }: ToolbarProps) => {
   return (
     <div className="flex flex-row justify-between pt-2 pb-2 mb-1">
       <div className="flex flex-row [&>*]:pl-2 [&>*:first-child]:pl-0">
         <div className={toolbarIconStyle}>
           <PlusCircleIcon />
         </div>
-        <div className={toolbarIconStyle}>1H</div>
+        <div className={toolbarIconStyle}>
+          <Select value={interval} onValueChange={setInterval}>
+            <SelectTrigger className="border-none bg-transparent p-0 -mt-2">
+              {interval}
+            </SelectTrigger>
+            <SelectContent>
+              {Object.values(Interval).map((intervalType) => {
+                return (
+                  <SelectItem key={intervalType} value={intervalType}>
+                    {intervalType}
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </div>
         <div className={toolbarIconStyle}>
           <CandlestickChartIcon />
         </div>

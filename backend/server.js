@@ -52,7 +52,7 @@ app.get("/lines", (req, res) => {
 
   const queryStartTime = startTime || defaultStartTime;
   const queryEndTime = endTime || defaultEndTime;
-
+  console.log(queryStartTime, queryEndTime, symbol, interval);
   // Construct the URL with query parameters
   const url = `${BASE_VEST_URL}/klines?symbol=${encodeURIComponent(
     symbol
