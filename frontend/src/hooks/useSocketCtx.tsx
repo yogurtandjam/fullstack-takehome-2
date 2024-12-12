@@ -7,8 +7,9 @@ import { Interval, TTicker, TWsChannelMessage, TWsSubscribedMessage } from '../t
 import { lineToCandlestick } from '../utils';
 
 interface WebSocketContextType {
-  interval: Interval | undefined;
+  interval: Interval;
   setInterval: (interval: Interval) => void;
+  setSymbol: (symbol: string) => void;
   socket: WebSocket | null;
   streamingCandlestick: CandlestickData<Time> | undefined;
   symbol: string;
@@ -23,7 +24,7 @@ interface WebSocketProviderProps {
 }
 
 export const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
-  const [symbol] = useState(DEFAULT_SYMBOL);
+  const [symbol, setSymbol] = useState(DEFAULT_SYMBOL);
   const [interval, setInterval] = useState<Interval>(DEFAULT_INTERVAL);
   const socket = useMemo(() => new WebSocket(DEFAULT_WS_URL), []);
   const [streamingCandlestick, setStreamingCandlestick] = useState<CandlestickData<Time>>();
@@ -100,7 +101,16 @@ export const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
 
   return (
     <WebSocketContext.Provider
-      value={{ socket, streamingCandlestick, tickers, ticker, symbol, interval, setInterval }}
+      value={{
+        socket,
+        streamingCandlestick,
+        tickers,
+        ticker,
+        symbol,
+        interval,
+        setInterval,
+        setSymbol,
+      }}
     >
       {children}
     </WebSocketContext.Provider>

@@ -1,5 +1,3 @@
-import { Interval } from '@/types';
-
 import { Chart } from '@/components/chart/chart';
 import { EmojiWidget } from '@/components/emoji-widget';
 import { Header } from '@/components/header/header';

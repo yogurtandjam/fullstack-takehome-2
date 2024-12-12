@@ -1,6 +1,3 @@
-import { getTicker24Hrs, getTickerLatest } from '@/services/api';
-import { useQuery } from '@tanstack/react-query';
-
 import { useWebSocket } from '@/hooks/useSocketCtx';
 
 import { Label } from '../ui/label';

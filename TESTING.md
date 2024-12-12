@@ -53,3 +53,11 @@ Most of what you see is non functional UI with some placeholders, with a few exc
 3. Market Details. Above the chart and in the trade form the price, 24h change, and 1h funding are populated by websocket data.
 
 4. Leverage and Liquidation. The trade form also has a mock implementation of liquidation price so you can observe the leverage affecting your trade. This is is not hooked up to order size and does not make any assumptions about a user's free collateral.
+
+5. Market selector. It's not super pretty since it was getting late, but it enables the user to select between ETH/USDC and BTC/USDC.
+
+Some things I didn't get to that I would like to:
+
+1. Emoji drag and drop. Implementing the drag and drop felt like it would take an inordinate amount of time given the time constraints so I opted not to do it. The biggest challenge here seems to be calculating the timestamp relative to position on the chart.
+
+2. General code cleanup.

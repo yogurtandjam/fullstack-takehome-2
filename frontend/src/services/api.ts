@@ -1,4 +1,5 @@
 import { ONE_DAY_IN_MS, ONE_HOUR_IN_MS, THIRTY_DAYS_IN_MS } from '@/consts';
+import { SeriesMarker, Time } from 'lightweight-charts';
 
 import { Interval, TLine, TReaction } from '@/types';
 
@@ -41,7 +42,7 @@ export const getLines = async (symbol: string, interval: Interval): Promise<TLin
   return linesJson;
 };
 
-export const getReactions = async (): Promise<TReaction[]> => {
+export const getReactions = async (): Promise<SeriesMarker<Time>[]> => {
   const reactions = await fetch(`${API_URL}/getReactions`);
   const reactionsJson = await reactions.json();
   console.log(reactionsJson, 'json');
@@ -54,5 +55,5 @@ export const getReactions = async (): Promise<TReaction[]> => {
       text: rx.emoji,
     }));
     return [...acc, ...reactionsForTimestamp];
-  }, [] as TReaction[]);
+  }, [] as SeriesMarker<Time>[]);
 };
