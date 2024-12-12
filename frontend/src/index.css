@@ -3,7 +3,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ... */
+
+body {
+  height: 100%;
+  width: 100%; 
+}
+:root {
+  height: 100%;
+  width: 100%
+}
+#root { 
+  height: 100%;
+  width: 100%;
+}
+
+
+
+
+/* VITE DEFAULTS. NOT USING THESE */
+
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
